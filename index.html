@@ -232,7 +232,7 @@ function renderLogin() {
     <div class="ngrid">${st.cfg.privileged.map(p=>`<button class="nbtn priv" onclick="selectPriv('${p}',this)">${p}</button>`).join('')}</div>
     <div class="al al-i" style="margin-top:10px">名前を選んでPINコードを入力してください</div>
     <div class="pin-wrap">
-      <input type="password" id="pin" inputmode="numeric" placeholder="PINコード" onkeydown="if(event.key==='Enter')loginPriv()">
+      <input type="password" id="pin" placeholder="PINコード" onkeydown="if(event.key==='Enter')loginPriv()">
       <button class="btn btn-p" onclick="loginPriv()">ログイン</button>
     </div>
     <div id="pin-err" style="color:var(--ng);font-size:.82rem;margin-top:5px"></div>
