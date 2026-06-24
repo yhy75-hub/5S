@@ -153,7 +153,7 @@ const totCls = t => t>=90?'ct hi':t>=70?'ct md':'ct lo';
 // ================================================================
 async function apiGet(params) {
   const url = st.gasUrl + '?' + new URLSearchParams(params).toString();
-  const res = await fetch(url);
+  const res = await fetch(url, { redirect: 'follow', credentials: 'omit' });
   const data = await res.json();
   if (data.error) throw new Error(data.error);
   return data;
