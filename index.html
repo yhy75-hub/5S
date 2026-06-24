@@ -83,10 +83,6 @@ body{font-family:'Hiragino Sans','Meiryo','Segoe UI',sans-serif;background:var(-
 .loading{display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:14px;color:var(--muted)}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* GAS URL未設定時のセットアップ画面 */
-.setup{background:#fffbeb;border:2px dashed #f59e0b;border-radius:var(--r);padding:24px;text-align:center}
-.setup h2{color:var(--warn);margin-bottom:10px}
-.setup input{width:100%;padding:10px;border:2px solid var(--border);border-radius:8px;font-size:.9rem;margin:8px 0;font-family:monospace}
 @media(max-width:600px){
   .ci{flex-direction:column;gap:7px}
   .sg{justify-content:flex-start}
@@ -102,10 +98,10 @@ body{font-family:'Hiragino Sans','Meiryo','Segoe UI',sans-serif;background:var(-
 </div>
 <script>
 // ================================================================
-// ★ GAS WebアプリのURLをここに設定してください
-//    デプロイ後に発行されるURLを貼り付けてlocalStorageに保存します
+// ★ GAS WebアプリのURLをここに設定してください（直書き）
+//    GASデプロイ後に発行される exec で終わるURLに変更すること
 // ================================================================
-const GAS_URL_KEY = '5s_gas_url';
+const GAS_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
 
 // ================================================================
 // チェック項目
@@ -143,7 +139,7 @@ const st = {
   view: 'login', user: null, role: null, selMember: null,
   y: new Date().getFullYear(), m: new Date().getMonth() + 1,
   cfg: null, memberData: {}, results: null,
-  gasUrl: localStorage.getItem(GAS_URL_KEY) || '',
+  gasUrl: GAS_URL,
 };
 let _selPrivName = null;
 
@@ -180,41 +176,14 @@ async function apiPost(body) {
 // 初期化
 // ================================================================
 async function init() {
-  if (!st.gasUrl) { renderSetup(); return; }
   try {
     st.cfg = await apiGet({ action: 'getConfig' });
     st.selMember = st.cfg.members[0];
     render();
   } catch(e) {
     document.getElementById('app').innerHTML =
-      `<div class="card"><div class="al al-d">読み込みに失敗しました。GAS URLを確認してください。<br><small>${e.message}</small></div>
-       <button class="btn btn-p" style="margin-top:10px" onclick="localStorage.removeItem('${GAS_URL_KEY}');location.reload()">URL再設定</button></div>`;
+      `<div class="card"><div class="al al-d">読み込みに失敗しました。GAS URLまたはデプロイ設定を確認してください。<br><small>${e.message}</small></div></div>`;
   }
-}
-
-function renderSetup() {
-  document.getElementById('app').innerHTML = `
-    <div class="hd"><div><h1>🏢 事務所 5Sチェックシート</h1><div class="sub">初期設定</div></div></div>
-    <div class="setup">
-      <h2>⚙️ 初期設定が必要です</h2>
-      <p style="font-size:.88rem;color:var(--muted);margin-bottom:12px">
-        Google Apps Script のデプロイURLを入力してください。<br>
-        一度設定するとこのブラウザでは次回から不要です。
-      </p>
-      <input type="url" id="gas-url-input" placeholder="https://script.google.com/macros/s/..." />
-      <button class="btn btn-p" style="margin-top:8px;width:100%" onclick="saveGasUrl()">設定して開始</button>
-    </div>`;
-}
-
-function saveGasUrl() {
-  const url = document.getElementById('gas-url-input').value.trim();
-  if (!url.startsWith('https://script.google.com')) {
-    alert('正しいGAS URLを入力してください');
-    return;
-  }
-  localStorage.setItem(GAS_URL_KEY, url);
-  st.gasUrl = url;
-  init();
 }
 
 // ================================================================
