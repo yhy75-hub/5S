@@ -107,11 +107,13 @@ function getResults(year, month) {
 }
 
 // ================================================================
-// PINコード変更（スクリプトエディタから直接実行）
+// PINコード設定（スクリプトエディタから直接実行）
+// ★ PINを変えたいときはここの文字列を書き換えてから実行
 // ================================================================
-function setAdminPin(newPin) {
-  PropertiesService.getScriptProperties().setProperty('ADMIN_PIN', newPin);
-  Logger.log('PINコードを変更しました');
+function setAdminPin() {
+  const PIN = '5s2026'; // ← ここを変更する
+  PropertiesService.getScriptProperties().setProperty('ADMIN_PIN', PIN);
+  Logger.log('PINコードを設定しました: ' + PIN);
 }
 
 // ================================================================
