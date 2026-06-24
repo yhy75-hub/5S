@@ -4,8 +4,12 @@
 // ================================================================
 
 const CFG = {
+  // 個人エリア（Section 1）のみ担当メンバー
   members: ['平林','森崎','里見','堀江','細江','林','専務','山本','本城','横塚','四ツ木','有側','伊藤','松谷','毛利'],
-  privileged: ['伊藤A','本城A','林A','事務所管理者','5Sリーダー'],
+  // 個人エリア（Section 1）＋共通エリア（Section 2）を担当するメンバー
+  s2members: ['伊藤A','本城A','林A'],
+  // 第三者評価月のみアクセス可、PIN必須
+  admins: ['事務所管理者','5Sリーダー'],
   qMonths: [3, 6, 9, 12],
 };
 
@@ -61,10 +65,11 @@ function jsonResponse_(data) {
 // 認証
 // ================================================================
 function authenticate(name, pin) {
-  if (CFG.privileged.includes(name)) {
+  if (CFG.admins.includes(name)) {
     const stored = PropertiesService.getScriptProperties().getProperty('ADMIN_PIN') || '5s2026';
     return pin === stored ? 'priv' : null;
   }
+  if (CFG.s2members.includes(name)) return 's2member';
   if (CFG.members.includes(name)) return 'member';
   return null;
 }

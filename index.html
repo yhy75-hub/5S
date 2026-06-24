@@ -225,11 +225,14 @@ function renderLogin() {
     : `<div class="card">
         <h2>👤 メンバー（個人評価）</h2>
         <p style="font-size:.82rem;color:var(--muted);margin-bottom:4px">自分の名前を選んでください</p>
-        <div class="ngrid">${st.cfg.members.map(m=>`<button class="nbtn" onclick="loginMember('${m}')">${m}</button>`).join('')}</div>
+        <div class="ngrid">
+          ${st.cfg.members.map(m=>`<button class="nbtn" onclick="loginMember('${m}')">${m}</button>`).join('')}
+          ${st.cfg.s2members.map(m=>`<button class="nbtn" onclick="loginMember('${m}')">${m}</button>`).join('')}
+        </div>
        </div>`;
   return memberSec + `<div class="card">
-    <h2>🔐 管理者・5Sリーダー</h2>
-    <div class="ngrid">${st.cfg.privileged.map(p=>`<button class="nbtn priv" onclick="selectPriv('${p}',this)">${p}</button>`).join('')}</div>
+    <h2>🔐 管理者・5Sリーダー（第三者評価月専用）</h2>
+    <div class="ngrid">${st.cfg.admins.map(p=>`<button class="nbtn priv" onclick="selectPriv('${p}',this)">${p}</button>`).join('')}</div>
     <div class="al al-i" style="margin-top:10px">名前を選んでPINコードを入力してください</div>
     <div class="pin-wrap">
       <input type="password" id="pin" placeholder="PINコード" onkeydown="if(event.key==='Enter')loginPriv()">
@@ -244,7 +247,13 @@ async function loginMember(name) {
   try {
     const d = await apiGet({ action: 'getMemberData', year: st.y, month: st.m, name });
     st.memberData[name] = d;
-    st.user = name; st.role = 'member'; st.view = 'eval';
+    // s2membersは共通エリアのデータも取得
+    const role = st.cfg.s2members.includes(name) ? 's2member' : 'member';
+    if (role === 's2member') {
+      const cd = await apiGet({ action: 'getMemberData', year: st.y, month: st.m, name: '__common__' });
+      st.memberData['__common__'] = cd;
+    }
+    st.user = name; st.role = role; st.view = 'eval';
     render();
   } catch(e) { alert('読み込みに失敗しました: ' + e.message); render(); }
 }
@@ -296,7 +305,9 @@ function renderEval() {
     <button class="nbtn2 on">📝 評価入力</button>
     ${st.role==='priv' ? `<button class="nbtn2" onclick="switchResults()">📊 結果一覧</button>` : ''}
   </div>`;
-  return nav + (st.role === 'member' ? renderMemberEval() : renderPrivEval());
+  if (st.role === 'priv')     return nav + renderPrivEval();
+  if (st.role === 's2member') return nav + renderS2MemberEval();
+  return nav + renderMemberEval();
 }
 
 async function switchResults() {
@@ -324,6 +335,42 @@ function renderMemberEval() {
     <div style="text-align:right;margin-top:10px">
       <button class="btn btn-s" onclick="submitMember()">✓ 提出する（変更不可）</button>
     </div>
+  </div>`;
+}
+
+function renderS2MemberEval() {
+  const name = st.user;
+  const md = st.memberData[name] || { s1:Array(10).fill(null), submitted:false };
+  const cmd = st.memberData['__common__'] || { s2:Array(10).fill(null), submitted:false };
+
+  const s1html = md.submitted
+    ? `<div class="al al-s">✅ 提出済み（${md.submittedAt}）</div>${roScores(S1,md.s1)}
+       <div class="tbar"><span>合計</span><span class="tscore">${sum(md.s1)}/100点</span></div>`
+    : `${scoreForm(S1, md.s1, false, name, 's1')}
+       <div class="tbar"><span>合計点</span><span class="tscore">${sum(md.s1)}/100点</span></div>
+       <div style="text-align:right;margin-top:10px">
+         <button class="btn btn-s" onclick="submitMember()">✓ 個人エリアを提出（変更不可）</button>
+       </div>`;
+
+  const s2html = cmd.submitted
+    ? `<div class="al al-s">✅ 提出済み（${cmd.submittedAt}）</div>${roScores(S2,cmd.s2)}
+       <div class="tbar"><span>合計</span><span class="tscore">${sum(cmd.s2)}/100点</span></div>`
+    : `${scoreForm(S2, cmd.s2, false, '__common__', 's2')}
+       <div class="tbar"><span>合計点</span><span class="tscore">${sum(cmd.s2)}/100点</span></div>
+       <div style="text-align:right;margin-top:10px">
+         <button class="btn btn-s" onclick="submitCommon()">✓ 共通エリアを提出（変更不可）</button>
+       </div>`;
+
+  return `<div class="card">
+    <h2>📋 ${name} さんの評価入力</h2>
+    <div class="al al-i">個人エリアと共通エリアの両方を評価してください。各提出後は変更不可です。</div>
+    <div class="sec-ttl">第1部：個人エリア評価（机周り・床面）</div>
+    ${s1html}
+  </div>
+  <div class="card">
+    <h2>🏢 共通エリア評価</h2>
+    <div class="sec-ttl">第2部：棚・壁柱・防火防災</div>
+    ${s2html}
   </div>`;
 }
 
