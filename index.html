@@ -9,46 +9,37 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Hiragino Sans','Meiryo','Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 #app{max-width:960px;margin:0 auto;padding:12px}
-/* Header */
 .hd{background:linear-gradient(135deg,var(--brand),var(--brand-l));color:#fff;border-radius:var(--r);padding:16px 20px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--sh)}
 .hd h1{font-size:1.25rem;font-weight:700}
 .hd .sub{font-size:.8rem;opacity:.85;margin-top:2px}
 .hd-r{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
 .badge{padding:3px 11px;border-radius:20px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.2)}
 .badge.q{background:#dc2626}
-.logout{background:rgba(255,255,255,.2);border:none;color:#fff;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:.8rem;touch-action:manipulation}
-/* Card */
+.logout{background:rgba(255,255,255,.2);border:none;color:#fff;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:.8rem}
 .card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:18px;margin-bottom:12px}
 .card h2{font-size:1rem;margin-bottom:12px;color:var(--brand);border-bottom:2px solid var(--border);padding-bottom:7px}
-/* Name grid */
 .ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;margin:10px 0}
-.nbtn{padding:13px 6px;border:2px solid var(--border);border-radius:8px;background:var(--bg);cursor:pointer;font-size:.9rem;text-align:center;transition:all .15s;touch-action:manipulation;-webkit-touch-callout:none}
+.nbtn{padding:13px 6px;border:2px solid var(--border);border-radius:8px;background:var(--bg);cursor:pointer;font-size:.9rem;text-align:center;transition:all .15s;touch-action:manipulation}
 .nbtn:active{transform:scale(.97)}
 .nbtn.sel{border-color:var(--brand);background:#eff6ff;color:var(--brand);font-weight:700}
 .nbtn.priv{border-color:var(--ng);color:var(--ng);background:#fff}
 .nbtn.priv.sel{background:#fff1f2}
-/* PIN */
 .pin-wrap{display:flex;gap:7px;align-items:center;margin-top:11px;flex-wrap:wrap}
-.pin-wrap input{border:2px solid var(--border);border-radius:8px;padding:10px 13px;font-size:1rem;width:180px;flex-shrink:0}
+.pin-wrap input{border:2px solid var(--border);border-radius:8px;padding:10px 13px;font-size:1rem;width:180px}
 .pin-wrap input:focus{outline:none;border-color:var(--brand)}
-/* Buttons */
 .btn{padding:10px 18px;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .15s;touch-action:manipulation}
 .btn-p{background:var(--brand);color:#fff}.btn-p:active{background:#1e40af}
 .btn-s{background:var(--ok);color:#fff}.btn-s:active{background:#15803d}
 .btn-sm{padding:6px 13px;font-size:.82rem}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-/* Alert */
 .al{padding:10px 14px;border-radius:8px;margin:9px 0;font-size:.86rem;line-height:1.4}
 .al-i{background:#eff6ff;border-left:4px solid var(--brand);color:var(--brand)}
 .al-s{background:var(--ok-bg);border-left:4px solid var(--ok);color:var(--ok)}
 .al-d{background:var(--ng-bg);border-left:4px solid var(--ng);color:var(--ng)}
-/* Nav */
 .nav{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap}
-.nbtn2{padding:8px 15px;border:2px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;font-size:.87rem;transition:all .15s;touch-action:manipulation}
+.nbtn2{padding:8px 15px;border:2px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;font-size:.87rem;transition:all .15s}
 .nbtn2.on{border-color:var(--brand);background:var(--brand);color:#fff}
-/* Q banner */
 .qban{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;padding:10px 16px;border-radius:8px;margin-bottom:12px;font-weight:600;font-size:.88rem}
-/* Eval form */
 .sec-ttl{background:var(--brand);color:#fff;padding:6px 13px;border-radius:6px;font-weight:700;margin:12px 0 7px;font-size:.88rem}
 .area-lbl{font-size:.75rem;font-weight:700;color:var(--muted);padding:8px 0 3px;border-top:1px solid var(--border);margin-top:5px}
 .area-lbl:first-of-type{border-top:none;margin-top:0}
@@ -63,24 +54,20 @@ body{font-family:'Hiragino Sans','Meiryo','Segoe UI',sans-serif;background:var(-
 .sb.wr{color:var(--warn)}.sb.wr.on{background:#f59e0b;color:#fff;border-color:#f59e0b}
 .sb.ng{color:var(--ng)}.sb.ng.on{background:var(--ng);color:#fff;border-color:var(--ng)}
 .sb:disabled{opacity:.45;cursor:not-allowed}
-/* Total */
 .tbar{display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:8px;padding:10px 14px;margin:12px 0;font-weight:700}
 .tscore{font-size:1.35rem;color:var(--brand)}
-/* Member tabs */
 .mtabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
 .mtab{padding:5px 11px;border:2px solid var(--border);border-radius:18px;cursor:pointer;font-size:.8rem;background:#fff;touch-action:manipulation}
 .mtab.on{border-color:var(--brand);background:var(--brand);color:#fff}
 .mtab.done{border-color:var(--ok);color:var(--ok)}
 .mtab.done.on{background:var(--ok);color:#fff;border-color:var(--ok)}
-/* Submitted */
 .sv{text-align:center;padding:30px 14px}
 .sv .ico{font-size:3rem;margin-bottom:12px}
 .sv h2{color:var(--ok);font-size:1.35rem;margin-bottom:5px}
 .sv p{color:var(--muted);margin-bottom:18px;font-size:.88rem}
-/* Results table */
 .rtw{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .rt{width:100%;border-collapse:collapse;font-size:.75rem;min-width:680px}
-.rt th{background:var(--brand);color:#fff;padding:6px 4px;text-align:center;position:sticky;top:0}
+.rt th{background:var(--brand);color:#fff;padding:6px 4px;text-align:center}
 .rt th.ar{background:#1e3a8a}
 .rt td{padding:5px 4px;text-align:center;border:1px solid var(--border)}
 .rt .itl{text-align:left;padding-left:6px;max-width:170px;font-size:.73rem}
@@ -93,13 +80,13 @@ body{font-family:'Hiragino Sans','Meiryo','Segoe UI',sans-serif;background:var(-
 .ct.hi{background:var(--ok-bg);color:var(--ok)}
 .ct.md{background:var(--warn-bg);color:var(--warn)}
 .ct.lo{background:var(--ng-bg);color:var(--ng)}
-/* Loading spinner */
 .loading{display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:14px;color:var(--muted)}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* Progress bar for submit */
-.prog{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin:8px 0}
-.prog-bar{height:100%;background:var(--brand);border-radius:2px;transition:width .3s}
+/* GAS URL未設定時のセットアップ画面 */
+.setup{background:#fffbeb;border:2px dashed #f59e0b;border-radius:var(--r);padding:24px;text-align:center}
+.setup h2{color:var(--warn);margin-bottom:10px}
+.setup input{width:100%;padding:10px;border:2px solid var(--border);border-radius:8px;font-size:.9rem;margin:8px 0;font-family:monospace}
 @media(max-width:600px){
   .ci{flex-direction:column;gap:7px}
   .sg{justify-content:flex-start}
@@ -115,7 +102,13 @@ body{font-family:'Hiragino Sans','Meiryo','Segoe UI',sans-serif;background:var(-
 </div>
 <script>
 // ================================================================
-// チェック項目定義
+// ★ GAS WebアプリのURLをここに設定してください
+//    デプロイ後に発行されるURLを貼り付けてlocalStorageに保存します
+// ================================================================
+const GAS_URL_KEY = '5s_gas_url';
+
+// ================================================================
+// チェック項目
 // ================================================================
 const S1 = [
   {a:'机の上', n:1,  t:'業務中や回覧中の物品以外は置かないこと。'},
@@ -149,38 +142,79 @@ const MN = ['','1月','2月','3月','4月','5月','6月','7月','8月','9月','1
 const st = {
   view: 'login', user: null, role: null, selMember: null,
   y: new Date().getFullYear(), m: new Date().getMonth() + 1,
-  cfg: null, memberData: {}, results: null, loading: false,
+  cfg: null, memberData: {}, results: null,
+  gasUrl: localStorage.getItem(GAS_URL_KEY) || '',
 };
 let _selPrivName = null;
 
-const isQ = () => st.cfg && st.cfg.qMonths.includes(st.m);
-const sum = arr => arr.reduce((a,b) => a + (b || 0), 0);
-function scCls(s){ return s===10?'c10':s===5?'c5':s===0?'c0':'cna'; }
-function totCls(t){ const p=t; return p>=90?'ct hi':p>=70?'ct md':'ct lo'; }
+const isQ  = () => st.cfg && st.cfg.qMonths.includes(st.m);
+const sum  = arr => arr.reduce((a,b) => a + (b || 0), 0);
+const scCls = s => s===10?'c10':s===5?'c5':s===0?'c0':'cna';
+const totCls = t => t>=90?'ct hi':t>=70?'ct md':'ct lo';
 
 // ================================================================
-// GAS呼び出しラッパー（Promise化）
+// API呼び出し
 // ================================================================
-function gas(fn, ...args) {
-  return new Promise((resolve, reject) => {
-    google.script.run
-      .withSuccessHandler(resolve)
-      .withFailureHandler(reject)
-      [fn](...args);
-  });
+async function apiGet(params) {
+  const url = st.gasUrl + '?' + new URLSearchParams(params).toString();
+  const res = await fetch(url);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+async function apiPost(body) {
+  // GASはPOSTリダイレクトするためno-corsでは読めない場合があるためGETで統一
+  // POST相当の操作もaction+パラメータをGETで送る（GASの仕様上の対応）
+  const params = new URLSearchParams({ action: body.action });
+  // ボディデータをBase64エンコードしてGETパラメータに載せる
+  params.append('data', btoa(unescape(encodeURIComponent(JSON.stringify(body)))));
+  const url = st.gasUrl + '?' + params.toString();
+  const res = await fetch(url);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
 }
 
 // ================================================================
 // 初期化
 // ================================================================
 async function init() {
+  if (!st.gasUrl) { renderSetup(); return; }
   try {
-    st.cfg = await gas('getConfig');
+    st.cfg = await apiGet({ action: 'getConfig' });
     st.selMember = st.cfg.members[0];
     render();
   } catch(e) {
-    document.getElementById('app').innerHTML = `<div class="card"><div class="al al-d">読み込みに失敗しました。ページを再読み込みしてください。<br>${e.message||''}</div></div>`;
+    document.getElementById('app').innerHTML =
+      `<div class="card"><div class="al al-d">読み込みに失敗しました。GAS URLを確認してください。<br><small>${e.message}</small></div>
+       <button class="btn btn-p" style="margin-top:10px" onclick="localStorage.removeItem('${GAS_URL_KEY}');location.reload()">URL再設定</button></div>`;
   }
+}
+
+function renderSetup() {
+  document.getElementById('app').innerHTML = `
+    <div class="hd"><div><h1>🏢 事務所 5Sチェックシート</h1><div class="sub">初期設定</div></div></div>
+    <div class="setup">
+      <h2>⚙️ 初期設定が必要です</h2>
+      <p style="font-size:.88rem;color:var(--muted);margin-bottom:12px">
+        Google Apps Script のデプロイURLを入力してください。<br>
+        一度設定するとこのブラウザでは次回から不要です。
+      </p>
+      <input type="url" id="gas-url-input" placeholder="https://script.google.com/macros/s/..." />
+      <button class="btn btn-p" style="margin-top:8px;width:100%" onclick="saveGasUrl()">設定して開始</button>
+    </div>`;
+}
+
+function saveGasUrl() {
+  const url = document.getElementById('gas-url-input').value.trim();
+  if (!url.startsWith('https://script.google.com')) {
+    alert('正しいGAS URLを入力してください');
+    return;
+  }
+  localStorage.setItem(GAS_URL_KEY, url);
+  st.gasUrl = url;
+  init();
 }
 
 // ================================================================
@@ -206,6 +240,11 @@ function render() {
   );
 }
 
+function showSpinner(msg) {
+  document.getElementById('app').innerHTML =
+    `<div class="loading"><div class="spinner"></div><span>${msg||'読み込み中...'}</span></div>`;
+}
+
 // ================================================================
 // LOGIN
 // ================================================================
@@ -217,12 +256,11 @@ function renderLogin() {
     : `<div class="card">
         <h2>👤 メンバー（個人評価）</h2>
         <p style="font-size:.82rem;color:var(--muted);margin-bottom:4px">自分の名前を選んでください</p>
-        <div class="ngrid">${st.cfg.members.map(m=>`<button class="nbtn" ontouchend="loginMember('${m}')" onclick="loginMember('${m}')">${m}</button>`).join('')}</div>
+        <div class="ngrid">${st.cfg.members.map(m=>`<button class="nbtn" onclick="loginMember('${m}')">${m}</button>`).join('')}</div>
        </div>`;
-
   return memberSec + `<div class="card">
     <h2>🔐 管理者・5Sリーダー</h2>
-    <div class="ngrid">${st.cfg.privileged.map(p=>`<button class="nbtn priv" id="pb_${p}" ontouchend="selectPriv('${p}',this)" onclick="selectPriv('${p}',this)">${p}</button>`).join('')}</div>
+    <div class="ngrid">${st.cfg.privileged.map(p=>`<button class="nbtn priv" onclick="selectPriv('${p}',this)">${p}</button>`).join('')}</div>
     <div class="al al-i" style="margin-top:10px">名前を選んでPINコードを入力してください</div>
     <div class="pin-wrap">
       <input type="password" id="pin" inputmode="numeric" placeholder="PINコード" onkeydown="if(event.key==='Enter')loginPriv()">
@@ -232,9 +270,14 @@ function renderLogin() {
   </div>`;
 }
 
-function loginMember(name) {
-  st.user = name; st.role = 'member'; st.view = 'eval';
-  loadMemberData(name);
+async function loginMember(name) {
+  showSpinner('読み込み中...');
+  try {
+    const d = await apiGet({ action: 'getMemberData', year: st.y, month: st.m, name });
+    st.memberData[name] = d;
+    st.user = name; st.role = 'member'; st.view = 'eval';
+    render();
+  } catch(e) { alert('読み込みに失敗しました: ' + e.message); render(); }
 }
 
 function selectPriv(name, el) {
@@ -248,22 +291,17 @@ async function loginPriv() {
   const errEl = document.getElementById('pin-err');
   if (!_selPrivName) { errEl.textContent = '名前を選んでください'; return; }
   const pin = document.getElementById('pin').value;
-  showLoading('認証中...');
   try {
-    const role = await gas('authenticate', _selPrivName, pin);
-    if (role === 'priv') {
+    const res = await apiGet({ action: 'authenticate', name: _selPrivName, pin });
+    if (res.role === 'priv') {
+      showSpinner('読み込み中...');
       st.user = _selPrivName; st.role = 'priv';
-      st.view = 'eval';
       await loadAllData();
-      render();
+      st.view = 'eval'; render();
     } else {
-      render();
       document.getElementById('pin-err').textContent = 'PINコードが違います';
     }
-  } catch(e) {
-    render();
-    document.getElementById('pin-err').textContent = 'エラーが発生しました';
-  }
+  } catch(e) { errEl.textContent = 'エラー: ' + e.message; }
 }
 
 function logout() {
@@ -272,43 +310,13 @@ function logout() {
   render();
 }
 
-// ================================================================
-// Data loading
-// ================================================================
-function showLoading(msg) {
-  document.getElementById('app').innerHTML += '';
-}
-
-async function loadMemberData(name) {
-  showSpinner();
-  try {
-    const d = await gas('getMemberData', st.y, st.m, name);
-    st.memberData[name] = d;
-    render();
-  } catch(e) {
-    showErr('データ読み込みに失敗しました');
-  }
-}
-
 async function loadAllData() {
-  try {
-    const r = await gas('getResults', st.y, st.m);
-    st.results = r;
-    st.cfg.members.forEach(m => {
-      st.memberData[m] = r[m] || { s1: Array(10).fill(null), s2: Array(10).fill(null), submitted: false, submittedAt: null };
-    });
-    st.memberData['__common__'] = r['__common__'] || { s1: Array(10).fill(null), s2: Array(10).fill(null), submitted: false, submittedAt: null };
-  } catch(e) { /* ignore */ }
-}
-
-function showSpinner() {
-  const app = document.getElementById('app');
-  const hd = app.querySelector('.hd');
-  app.innerHTML = (hd ? hd.outerHTML : '') + '<div class="loading"><div class="spinner"></div><span>読み込み中...</span></div>';
-}
-
-function showErr(msg) {
-  document.getElementById('app').innerHTML += `<div class="card"><div class="al al-d">${msg}</div></div>`;
+  const r = await apiGet({ action: 'getResults', year: st.y, month: st.m });
+  st.results = r;
+  st.cfg.members.forEach(m => {
+    st.memberData[m] = r[m] || { s1:Array(10).fill(null), s2:Array(10).fill(null), submitted:false, submittedAt:null };
+  });
+  st.memberData['__common__'] = r['__common__'] || { s1:Array(10).fill(null), s2:Array(10).fill(null), submitted:false, submittedAt:null };
 }
 
 // ================================================================
@@ -323,34 +331,26 @@ function renderEval() {
 }
 
 async function switchResults() {
-  showSpinner();
-  try {
-    st.results = await gas('getResults', st.y, st.m);
-    st.view = 'results';
-    render();
-  } catch(e) { showErr('結果取得に失敗しました'); }
+  showSpinner('結果を取得中...');
+  st.results = await apiGet({ action: 'getResults', year: st.y, month: st.m });
+  st.view = 'results'; render();
 }
 
-// ---- Member ----
 function renderMemberEval() {
-  const name = st.user;
-  const md = st.memberData[name];
-  if (!md) return '<div class="loading"><div class="spinner"></div><span>読み込み中...</span></div>';
-
+  const md = st.memberData[st.user];
+  if (!md) return '<div class="loading"><div class="spinner"></div></div>';
   if (md.submitted) return `<div class="card sv">
-    <div class="ico">✅</div>
-    <h2>提出完了</h2>
+    <div class="ico">✅</div><h2>提出完了</h2>
     <p>${md.submittedAt} に提出しました</p>
     ${roScores(S1, md.s1)}
     <div class="tbar"><span>合計点</span><span class="tscore">${sum(md.s1)} / 100点</span></div>
     <p style="font-size:.8rem;color:var(--muted)">提出後の編集はできません。</p>
   </div>`;
-
   return `<div class="card">
-    <h2>📋 ${name} さんの評価入力</h2>
-    <div class="al al-i">各項目を ○(10点) △(5点) ×(0点) で評価し、提出してください。<br>提出後は変更できません。</div>
+    <h2>📋 ${st.user} さんの評価入力</h2>
+    <div class="al al-i">○(10点) △(5点) ×(0点) で評価し、提出してください。提出後は変更不可です。</div>
     <div class="sec-ttl">第1部：個人エリア評価（机周り・床面）</div>
-    ${scoreForm(S1, md.s1, false, 's1', name)}
+    ${scoreForm(S1, md.s1, false)}
     <div class="tbar"><span>合計点</span><span class="tscore">${sum(md.s1)} / 100点</span></div>
     <div style="text-align:right;margin-top:10px">
       <button class="btn btn-s" onclick="submitMember()">✓ 提出する（変更不可）</button>
@@ -358,37 +358,29 @@ function renderMemberEval() {
   </div>`;
 }
 
-// ---- Priv ----
 function renderPrivEval() {
   const q = isQ();
   const tabs = st.cfg.members.map(m => {
     const done = st.memberData[m] && st.memberData[m].submitted;
     return `<button class="mtab ${st.selMember===m?'on':''} ${done?'done':''}" onclick="st.selMember='${m}';render()">${m}${done?' ✓':''}</button>`;
   }).join('');
-
-  const md = st.memberData[st.selMember] || { s1:Array(10).fill(null), s2:Array(10).fill(null), submitted:false, submittedAt:null };
-  let s1html = md.submitted
-    ? `<div class="al al-s">✅ ${st.selMember} さん：提出済み（${md.submittedAt}）</div>
-       ${roScores(S1, md.s1)}
-       <div class="tbar"><span>合計</span><span class="tscore">${sum(md.s1)} / 100点</span></div>`
-    : `${scoreForm(S1, md.s1, false, 's1', st.selMember)}
-       <div class="tbar"><span>合計点</span><span class="tscore">${sum(md.s1)} / 100点</span></div>
+  const md = st.memberData[st.selMember] || { s1:Array(10).fill(null), s2:Array(10).fill(null), submitted:false };
+  const s1html = md.submitted
+    ? `<div class="al al-s">✅ ${st.selMember}：提出済み（${md.submittedAt}）</div>${roScores(S1,md.s1)}<div class="tbar"><span>合計</span><span class="tscore">${sum(md.s1)}/100点</span></div>`
+    : `${scoreForm(S1, md.s1, false, st.selMember, 's1')}
+       <div class="tbar"><span>合計点</span><span class="tscore">${sum(md.s1)}/100点</span></div>
        <div style="display:flex;gap:7px;justify-content:flex-end;margin-top:9px">
          <button class="btn btn-p btn-sm" onclick="saveDraft('${st.selMember}')">一時保存</button>
-         <button class="btn btn-s btn-sm" onclick="submitAdmin('${st.selMember}')">✓ ${st.selMember}さんを確定</button>
+         <button class="btn btn-s btn-sm" onclick="submitAdmin('${st.selMember}')">✓ ${st.selMember}を確定</button>
        </div>`;
-
-  const cmd = st.memberData['__common__'] || { s2:Array(10).fill(null), submitted:false, submittedAt:null };
-  let s2html = cmd.submitted
-    ? `<div class="al al-s">✅ 共通エリア：提出済み（${cmd.submittedAt}）</div>
-       ${roScores(S2, cmd.s2)}
-       <div class="tbar"><span>合計</span><span class="tscore">${sum(cmd.s2)} / 100点</span></div>`
-    : `${scoreForm(S2, cmd.s2, false, 's2', '__common__')}
-       <div class="tbar"><span>合計点</span><span class="tscore">${sum(cmd.s2)} / 100点</span></div>
+  const cmd = st.memberData['__common__'] || { s2:Array(10).fill(null), submitted:false };
+  const s2html = cmd.submitted
+    ? `<div class="al al-s">✅ 共通エリア：提出済み（${cmd.submittedAt}）</div>${roScores(S2,cmd.s2)}<div class="tbar"><span>合計</span><span class="tscore">${sum(cmd.s2)}/100点</span></div>`
+    : `${scoreForm(S2, cmd.s2, false, '__common__', 's2')}
+       <div class="tbar"><span>合計点</span><span class="tscore">${sum(cmd.s2)}/100点</span></div>
        <div style="text-align:right;margin-top:9px">
          <button class="btn btn-s btn-sm" onclick="submitCommon()">✓ 共通エリアを確定</button>
        </div>`;
-
   return `<div class="card">
     <h2>👤 メンバー個人評価${q?' （第三者評価）':''}</h2>
     ${q?`<div class="qban">⚠️ 第三者評価月：管理者・リーダーが全メンバーを評価します</div>`:''}
@@ -396,44 +388,35 @@ function renderPrivEval() {
     <div class="sec-ttl">第1部：個人エリア評価 — ${st.selMember} さん</div>
     ${s1html}
   </div>
-  <div class="card">
-    <h2>🏢 共通エリア評価</h2>
-    <div class="sec-ttl">第2部：棚・壁柱・防火防災</div>
-    ${s2html}
+  <div class="card"><h2>🏢 共通エリア評価</h2>
+    <div class="sec-ttl">第2部：棚・壁柱・防火防災</div>${s2html}
   </div>`;
 }
 
-// ================================================================
-// Score form
-// ================================================================
-function scoreForm(items, scores, ro, sec, key) {
-  let h = ''; let la = null;
-  items.forEach((it, i) => {
-    if (it.a !== la) { h += `<div class="area-lbl">📍 ${it.a}</div>`; la = it.a; }
-    const s = scores[i];
-    h += `<div class="ci">
-      <div class="ci-no">${it.n}</div>
-      <div class="ci-txt">${it.t}</div>
+function scoreForm(items, scores, ro, key, sec) {
+  let h='', la=null;
+  items.forEach((it,i) => {
+    if(it.a!==la){h+=`<div class="area-lbl">📍 ${it.a}</div>`;la=it.a;}
+    const s=scores[i];
+    const setFn = key ? `setScore('${key}','${sec||'s1'}',${i},` : `setScore('${st.user}','s1',${i},`;
+    h+=`<div class="ci">
+      <div class="ci-no">${it.n}</div><div class="ci-txt">${it.t}</div>
       <div class="sg">
-        <button class="sb ok ${s===10?'on':''}" ${ro?'disabled':''} onclick="setScore('${key}','${sec}',${i},10)">○</button>
-        <button class="sb wr ${s===5?'on':''}"  ${ro?'disabled':''} onclick="setScore('${key}','${sec}',${i},5)">△</button>
-        <button class="sb ng ${s===0?'on':''}"  ${ro?'disabled':''} onclick="setScore('${key}','${sec}',${i},0)">×</button>
-      </div>
-    </div>`;
+        <button class="sb ok ${s===10?'on':''}" ${ro?'disabled':''} onclick="${setFn}10)">○</button>
+        <button class="sb wr ${s===5?'on':''}"  ${ro?'disabled':''} onclick="${setFn}5)">△</button>
+        <button class="sb ng ${s===0?'on':''}"  ${ro?'disabled':''} onclick="${setFn}0)">×</button>
+      </div></div>`;
   });
   return h;
 }
 
 function roScores(items, scores) {
-  const col = {10:'var(--ok)', 5:'var(--warn)', 0:'var(--ng)'};
-  let h = ''; let la = null;
-  items.forEach((it, i) => {
-    if (it.a !== la) { h += `<div class="area-lbl">📍 ${it.a}</div>`; la = it.a; }
-    const s = scores[i];
-    const lbl = s===10?'○':s===5?'△':s===0?'×':'－';
-    h += `<div class="ci">
-      <div class="ci-no">${it.n}</div>
-      <div class="ci-txt">${it.t}</div>
+  const col={10:'var(--ok)',5:'var(--warn)',0:'var(--ng)'};
+  let h='', la=null;
+  items.forEach((it,i) => {
+    if(it.a!==la){h+=`<div class="area-lbl">📍 ${it.a}</div>`;la=it.a;}
+    const s=scores[i], lbl=s===10?'○':s===5?'△':s===0?'×':'－';
+    h+=`<div class="ci"><div class="ci-no">${it.n}</div><div class="ci-txt">${it.t}</div>
       <div style="font-size:1.05rem;font-weight:700;color:${col[s]||'var(--muted)'};width:40px;text-align:center">${lbl}</div>
       <div style="font-weight:700;color:${col[s]||'var(--muted)'};width:30px;text-align:right">${s!=null?s+'点':'－'}</div>
     </div>`;
@@ -442,9 +425,9 @@ function roScores(items, scores) {
 }
 
 function setScore(key, sec, idx, val) {
-  if (!st.memberData[key]) st.memberData[key] = { s1:Array(10).fill(null), s2:Array(10).fill(null), submitted:false };
-  if (st.memberData[key].submitted) return;
-  st.memberData[key][sec][idx] = val;
+  if(!st.memberData[key]) st.memberData[key]={s1:Array(10).fill(null),s2:Array(10).fill(null),submitted:false};
+  if(st.memberData[key].submitted) return;
+  st.memberData[key][sec][idx]=val;
   render();
 }
 
@@ -453,147 +436,104 @@ function setScore(key, sec, idx, val) {
 // ================================================================
 async function submitMember() {
   const md = st.memberData[st.user];
-  const ua = md.s1.filter(s => s === null).length;
-  if (ua > 0 && !confirm(`${ua}項目が未評価です。未評価は0点として提出しますか？`)) return;
-  if (!confirm('提出すると編集できなくなります。よろしいですか？')) return;
-  md.s1 = md.s1.map(s => s===null ? 0 : s);
-  const btn = document.querySelector('.btn-s');
-  if (btn) { btn.disabled = true; btn.textContent = '提出中...'; }
+  const ua = md.s1.filter(s=>s===null).length;
+  if(ua>0 && !confirm(`${ua}項目が未評価です。未評価は0点として提出しますか？`)) return;
+  if(!confirm('提出すると編集できなくなります。よろしいですか？')) return;
+  md.s1 = md.s1.map(s=>s===null?0:s);
   try {
-    const res = await gas('submitScores', st.y, st.m, st.user, md.s1, md.s2, 'member');
-    if (res.success) {
-      md.submitted = true; md.submittedAt = res.submittedAt;
-      render();
-    } else {
-      alert(res.message || '提出に失敗しました');
-      render();
-    }
-  } catch(e) {
-    alert('通信エラーが発生しました。再度お試しください。');
-    render();
-  }
+    const res = await apiGet({action:'submitScores',year:st.y,month:st.m,name:st.user,
+      s1:JSON.stringify(md.s1),s2:JSON.stringify(md.s2),role:'member'});
+    if(res.success){ md.submitted=true; md.submittedAt=res.submittedAt; render(); }
+    else alert(res.message);
+  } catch(e){ alert('通信エラー: '+e.message); }
 }
 
 async function submitAdmin(name) {
-  const md = st.memberData[name] || { s1:Array(10).fill(null), s2:Array(10).fill(null) };
-  const ua = md.s1.filter(s => s===null).length;
-  if (ua > 0 && !confirm(`${ua}項目が未評価です。このまま確定しますか？`)) return;
-  if (!confirm(`${name}さんの評価を確定します。よろしいですか？`)) return;
-  md.s1 = md.s1.map(s => s===null ? 0 : s);
+  const md = st.memberData[name] || {s1:Array(10).fill(null),s2:Array(10).fill(null)};
+  const ua = md.s1.filter(s=>s===null).length;
+  if(ua>0 && !confirm(`${ua}項目未評価。このまま確定しますか？`)) return;
+  if(!confirm(`${name}さんの評価を確定します。よろしいですか？`)) return;
+  md.s1 = md.s1.map(s=>s===null?0:s);
   try {
-    const res = await gas('submitScores', st.y, st.m, name, md.s1, md.s2, 'priv');
-    if (res.success) {
-      md.submitted = true; md.submittedAt = res.submittedAt;
-      const next = st.cfg.members.find(m => !(st.memberData[m] && st.memberData[m].submitted));
-      if (next) st.selMember = next;
+    const res = await apiGet({action:'submitScores',year:st.y,month:st.m,name,
+      s1:JSON.stringify(md.s1),s2:JSON.stringify(md.s2),role:'priv'});
+    if(res.success){
+      md.submitted=true; md.submittedAt=res.submittedAt;
+      const next=st.cfg.members.find(m=>!(st.memberData[m]&&st.memberData[m].submitted));
+      if(next) st.selMember=next;
       render();
-    } else {
-      alert(res.message);
-    }
-  } catch(e) {
-    alert('通信エラーが発生しました。');
-  }
+    } else alert(res.message);
+  } catch(e){ alert('通信エラー: '+e.message); }
 }
 
 async function saveDraft(name) {
-  const md = st.memberData[name] || { s1:Array(10).fill(null), s2:Array(10).fill(null) };
+  const md = st.memberData[name] || {s1:Array(10).fill(null),s2:Array(10).fill(null)};
   try {
-    await gas('saveScores', st.y, st.m, name, md.s1, md.s2, 'priv');
-    const el = document.querySelector('.btn-p.btn-sm');
-    if (el) { el.textContent = '保存済み ✓'; setTimeout(() => { el.textContent = '一時保存'; }, 2000); }
-  } catch(e) {
-    alert('保存に失敗しました。');
-  }
+    await apiGet({action:'saveScores',year:st.y,month:st.m,name,
+      s1:JSON.stringify(md.s1),s2:JSON.stringify(md.s2),role:'priv'});
+    const el=document.querySelector('.btn-p.btn-sm');
+    if(el){el.textContent='保存済み ✓';setTimeout(()=>{el.textContent='一時保存';},2000);}
+  } catch(e){ alert('保存失敗: '+e.message); }
 }
 
 async function submitCommon() {
-  const md = st.memberData['__common__'] || { s2:Array(10).fill(null) };
-  const ua = md.s2.filter(s => s===null).length;
-  if (ua > 0 && !confirm(`${ua}項目が未評価です。このまま提出しますか？`)) return;
-  if (!confirm('共通エリア評価を確定します。よろしいですか？')) return;
-  md.s2 = md.s2.map(s => s===null ? 0 : s);
+  const md = st.memberData['__common__'] || {s2:Array(10).fill(null)};
+  const ua = md.s2.filter(s=>s===null).length;
+  if(ua>0 && !confirm(`${ua}項目未評価。このまま提出しますか？`)) return;
+  if(!confirm('共通エリア評価を確定します。よろしいですか？')) return;
+  md.s2 = md.s2.map(s=>s===null?0:s);
   try {
-    const res = await gas('submitScores', st.y, st.m, '__common__', Array(10).fill(null), md.s2, 'priv');
-    if (res.success) {
-      md.submitted = true; md.submittedAt = res.submittedAt;
-      render();
-    } else {
-      alert(res.message);
-    }
-  } catch(e) {
-    alert('通信エラーが発生しました。');
-  }
+    const res = await apiGet({action:'submitScores',year:st.y,month:st.m,name:'__common__',
+      s1:JSON.stringify(Array(10).fill(null)),s2:JSON.stringify(md.s2),role:'priv'});
+    if(res.success){ md.submitted=true; md.submittedAt=res.submittedAt; render(); }
+    else alert(res.message);
+  } catch(e){ alert('通信エラー: '+e.message); }
 }
 
 // ================================================================
 // RESULTS
 // ================================================================
 function renderResults() {
-  const nav = `<div class="nav">
+  const nav=`<div class="nav">
     <button class="nbtn2" onclick="st.view='eval';render()">📝 評価入力</button>
     <button class="nbtn2 on">📊 結果一覧</button>
   </div>`;
-
-  const d = st.results || {};
-  const cmd = d['__common__'] || { s2:Array(10).fill(null), submitted:false };
-  const members = st.cfg.members;
-
-  const totals = members.map(() => 0);
-  let tb1 = ''; let la = null;
-  S1.forEach((it, i) => {
-    tb1 += '<tr>';
-    if (it.a !== la) {
-      const span = S1.filter(x => x.a === it.a).length;
-      tb1 += `<td class="arc" rowspan="${span}">${it.a}</td>`;
-      la = it.a;
-    }
-    tb1 += `<td>${it.n}</td><td class="itl">${it.t}</td>`;
-    members.forEach((m, mi) => {
-      const md = d[m]; const s = md ? md.s1[i] : null;
-      totals[mi] += (s || 0);
-      tb1 += `<td class="${scCls(s)}">${s===null?'－':s===10?'○':s===5?'△':'×'}</td>`;
-    });
-    tb1 += '</tr>';
+  const d=st.results||{}, members=st.cfg.members;
+  const cmd=d['__common__']||{s2:Array(10).fill(null),submitted:false};
+  const totals=members.map(()=>0);
+  let tb1='',la=null;
+  S1.forEach((it,i)=>{
+    tb1+='<tr>';
+    if(it.a!==la){tb1+=`<td class="arc" rowspan="${S1.filter(x=>x.a===it.a).length}">${it.a}</td>`;la=it.a;}
+    tb1+=`<td>${it.n}</td><td class="itl">${it.t}</td>`;
+    members.forEach((m,mi)=>{const md=d[m];const s=md?md.s1[i]:null;totals[mi]+=(s||0);tb1+=`<td class="${scCls(s)}">${s===null?'－':s===10?'○':s===5?'△':'×'}</td>`;});
+    tb1+='</tr>';
   });
-  tb1 += '<tr><td colspan="3" style="font-weight:700;text-align:right;padding-right:7px">合計</td>';
-  members.forEach((m, mi) => {
-    const md = d[m]; const ok = md && md.submitted;
-    tb1 += `<td class="${ok ? totCls(totals[mi]) : 'cna'}">${ok ? totals[mi] : '未'}</td>`;
+  tb1+='<tr><td colspan="3" style="font-weight:700;text-align:right;padding-right:7px">合計</td>';
+  members.forEach((m,mi)=>{const md=d[m];const ok=md&&md.submitted;tb1+=`<td class="${ok?totCls(totals[mi]):'cna'}">${ok?totals[mi]:'未'}</td>`;});
+  tb1+='</tr>';
+  let tb2='',la2=null,s2tot=0;
+  S2.forEach((it,i)=>{
+    tb2+='<tr>';
+    if(it.a!==la2){tb2+=`<td class="arc" rowspan="${S2.filter(x=>x.a===it.a).length}">${it.a}</td>`;la2=it.a;}
+    const s=cmd.s2?cmd.s2[i]:null;s2tot+=(s||0);
+    tb2+=`<td>${it.n}</td><td class="itl">${it.t}</td><td class="${scCls(s)}">${s===null?'－':s===10?'○':s===5?'△':'×'}</td></tr>`;
   });
-  tb1 += '</tr>';
-
-  let tb2 = ''; la = null; let s2tot = 0;
-  S2.forEach((it, i) => {
-    tb2 += '<tr>';
-    if (it.a !== la) {
-      const span = S2.filter(x => x.a === it.a).length;
-      tb2 += `<td class="arc" rowspan="${span}">${it.a}</td>`;
-      la = it.a;
-    }
-    const s = cmd.s2 ? cmd.s2[i] : null; s2tot += (s || 0);
-    tb2 += `<td>${it.n}</td><td class="itl">${it.t}</td><td class="${scCls(s)}">${s===null?'－':s===10?'○':s===5?'△':'×'}</td></tr>`;
-  });
-  tb2 += `<tr><td colspan="3" style="font-weight:700;text-align:right;padding-right:7px">合計</td>
-    <td class="${cmd.submitted ? totCls(s2tot) : 'cna'}">${cmd.submitted ? s2tot : '未'}</td></tr>`;
-
-  const submitted = members.filter(m => d[m] && d[m].submitted).length;
-
-  const thMembers = members.map(m => `<th>${m}</th>`).join('');
-
-  return nav + `<div class="card">
+  tb2+=`<tr><td colspan="3" style="font-weight:700;text-align:right;padding-right:7px">合計</td><td class="${cmd.submitted?totCls(s2tot):'cna'}">${cmd.submitted?s2tot:'未'}</td></tr>`;
+  const submitted=members.filter(m=>d[m]&&d[m].submitted).length;
+  const thM=members.map(m=>`<th>${m}</th>`).join('');
+  return nav+`<div class="card">
     <h2>📊 評価結果一覧 — ${st.y}年${MN[st.m]}</h2>
     <div class="al al-i" style="margin-bottom:10px">提出状況：<b>${submitted} / ${members.length} 名</b>完了</div>
     <h3 style="font-size:.88rem;margin:8px 0 6px;color:var(--brand)">▶ 第1部：個人エリア評価</h3>
     <div class="rtw"><table class="rt">
-      <thead><tr><th class="ar">場所</th><th>№</th><th class="ar" style="text-align:left;padding-left:5px">チェック項目</th>${thMembers}</tr></thead>
-      <tbody>${tb1}</tbody>
-    </table></div>
+      <thead><tr><th class="ar">場所</th><th>№</th><th class="ar" style="text-align:left;padding-left:5px">チェック項目</th>${thM}</tr></thead>
+      <tbody>${tb1}</tbody></table></div>
     <h3 style="font-size:.88rem;margin:16px 0 6px;color:var(--brand)">▶ 第2部：共通エリア評価</h3>
     <div class="rtw"><table class="rt">
       <thead><tr><th class="ar">場所</th><th>№</th><th class="ar" style="text-align:left;padding-left:5px">チェック項目</th><th>評価</th></tr></thead>
-      <tbody>${tb2}</tbody>
-    </table></div>
-    <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <tbody>${tb2}</tbody></table></div>
+    <div style="margin-top:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <button class="btn btn-p btn-sm" onclick="refreshResults()">🔄 最新に更新</button>
       <button class="btn btn-p btn-sm" onclick="exportCSV()">📥 CSVダウンロード</button>
     </div>
@@ -601,33 +541,23 @@ function renderResults() {
 }
 
 async function refreshResults() {
-  showSpinner();
-  try {
-    st.results = await gas('getResults', st.y, st.m);
-    st.view = 'results';
-    render();
-  } catch(e) { showErr('更新に失敗しました'); }
+  showSpinner('更新中...');
+  st.results = await apiGet({action:'getResults',year:st.y,month:st.m});
+  st.view='results'; render();
 }
 
 function exportCSV() {
-  const d = st.results || {};
-  const members = st.cfg.members;
-  const bom = '﻿';
-  let csv = '氏名,' + S1.map(i=>`${i.n}）${i.t}`).join(',') + ',合計(個人)\n';
-  members.forEach(m => {
-    const md = d[m] || { s1: Array(10).fill('') };
-    csv += `${m},${md.s1.map(s=>s!=null?s:'').join(',')},${md.submitted?sum(md.s1):''}\n`;
-  });
-  csv += '\n共通エリア,' + S2.map(i=>`${i.n}）${i.t}`).join(',') + ',合計(共通)\n';
-  const cm = d['__common__'] || { s2: Array(10).fill('') };
-  csv += `評価結果,${cm.s2.map(s=>s!=null?s:'').join(',')},${cm.submitted?sum(cm.s2):''}\n`;
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([bom+csv], {type:'text/csv'}));
-  a.download = `5S評価_${st.y}年${st.m}月.csv`;
-  a.click();
+  const d=st.results||{}, members=st.cfg.members;
+  let csv='氏名,'+S1.map(i=>`${i.n}）${i.t}`).join(',')+',合計(個人)\n';
+  members.forEach(m=>{const md=d[m]||{s1:Array(10).fill('')};csv+=`${m},${md.s1.map(s=>s!=null?s:'').join(',')},${md.submitted?sum(md.s1):''}\n`;});
+  csv+='\n共通エリア,'+S2.map(i=>`${i.n}）${i.t}`).join(',')+',合計(共通)\n';
+  const cm=d['__common__']||{s2:Array(10).fill('')};
+  csv+=`評価結果,${cm.s2.map(s=>s!=null?s:'').join(',')},${cm.submitted?sum(cm.s2):''}\n`;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv'}));
+  a.download=`5S評価_${st.y}年${st.m}月.csv`;a.click();
 }
 
-// ================================================================
 init();
 </script>
 </body>

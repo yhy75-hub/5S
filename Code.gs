@@ -1,10 +1,8 @@
 // ================================================================
-// 事務所 5Sチェックシート - Google Apps Script サーバーサイド
+// 事務所 5Sチェックシート - Google Apps Script
+// GitHub Pages の index.html から fetch() で呼び出すREST API
 // ================================================================
 
-// ================================================================
-// 設定（カスタマイズはここ）
-// ================================================================
 const CFG = {
   members: ['平林','森崎','里見','堀江','細江','林','専務','山本','本城','横塚','四ツ木','有側','伊藤','松谷','毛利'],
   privileged: ['伊藤A','本城A','林A','事務所管理者','5Sリーダー'],
@@ -12,30 +10,56 @@ const CFG = {
 };
 
 // ================================================================
-// エントリーポイント
+// エントリーポイント（GETはデータ取得、POSTは書き込み）
 // ================================================================
-function doGet() {
-  return HtmlService.createHtmlOutputFromFile('index')
-    .setTitle('事務所 5Sチェックシート')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1.0');
+function doGet(e) {
+  const p = e.parameter;
+  let result;
+  try {
+    const y = +p.year, m = +p.month;
+    // スコアはJSON文字列で渡ってくるのでパース
+    const s1 = p.s1 ? JSON.parse(p.s1) : null;
+    const s2 = p.s2 ? JSON.parse(p.s2) : null;
+
+    if      (p.action === 'getConfig')     result = CFG;
+    else if (p.action === 'getMemberData') result = getMemberData(y, m, p.name);
+    else if (p.action === 'getResults')    result = getResults(y, m);
+    else if (p.action === 'authenticate')  result = { role: authenticate(p.name, p.pin) };
+    else if (p.action === 'saveScores')    result = saveScores(y, m, p.name, s1, s2, p.role);
+    else if (p.action === 'submitScores')  result = submitScores(y, m, p.name, s1, s2, p.role);
+    else result = { error: 'Unknown action: ' + p.action };
+  } catch(err) {
+    result = { error: err.message };
+  }
+  return jsonResponse_(result);
+}
+
+function doPost(e) {
+  let body, result;
+  try {
+    body = JSON.parse(e.postData.contents);
+    const { action } = body;
+    if      (action === 'authenticate')  result = { role: authenticate(body.name, body.pin) };
+    else if (action === 'getMemberData') result = getMemberData(body.year, body.month, body.name);
+    else if (action === 'saveScores')    result = saveScores(body.year, body.month, body.name, body.s1, body.s2, body.role);
+    else if (action === 'submitScores')  result = submitScores(body.year, body.month, body.name, body.s1, body.s2, body.role);
+    else if (action === 'getResults')    result = getResults(body.year, body.month);
+    else result = { error: 'Unknown action: ' + action };
+  } catch(err) {
+    result = { error: err.message };
+  }
+  return jsonResponse_(result);
+}
+
+function jsonResponse_(data) {
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 // ================================================================
-// クライアントから呼び出す関数
+// 認証
 // ================================================================
-
-/** 設定情報を返す */
-function getConfig() {
-  return CFG;
-}
-
-/**
- * 認証
- * member: PINなし（メンバー名だけで通る）
- * priv:   PIN必須
- * @returns {string|null} 'member' | 'priv' | null
- */
 function authenticate(name, pin) {
   if (CFG.privileged.includes(name)) {
     const stored = PropertiesService.getScriptProperties().getProperty('ADMIN_PIN') || '5s2026';
@@ -45,10 +69,9 @@ function authenticate(name, pin) {
   return null;
 }
 
-/**
- * 1メンバー分のデータ取得
- * @returns {{ s1: number[], s2: number[], submitted: boolean, submittedAt: string|null }}
- */
+// ================================================================
+// データ操作
+// ================================================================
 function getMemberData(year, month, name) {
   const sh = getOrCreateSheet_(year, month);
   const rowIdx = findRow_(sh, name);
@@ -64,9 +87,6 @@ function getMemberData(year, month, name) {
   };
 }
 
-/**
- * スコアを一時保存（提出なし）
- */
 function saveScores(year, month, name, s1, s2, role) {
   const sh = getOrCreateSheet_(year, month);
   if (isSubmitted_(sh, name)) return { success: false, message: '既に提出済みです。' };
@@ -74,9 +94,6 @@ function saveScores(year, month, name, s1, s2, role) {
   return { success: true };
 }
 
-/**
- * スコアを提出（提出後はロック）
- */
 function submitScores(year, month, name, s1, s2, role) {
   const sh = getOrCreateSheet_(year, month);
   if (isSubmitted_(sh, name)) return { success: false, message: '既に提出済みです。' };
@@ -86,9 +103,6 @@ function submitScores(year, month, name, s1, s2, role) {
   return { success: true, submittedAt: stamp };
 }
 
-/**
- * 全メンバー結果を取得（管理者用）
- */
 function getResults(year, month) {
   const sh = getOrCreateSheet_(year, month);
   const data = sh.getDataRange().getValues();
@@ -108,7 +122,7 @@ function getResults(year, month) {
 
 // ================================================================
 // PINコード設定（スクリプトエディタから直接実行）
-// ★ PINを変えたいときはここの文字列を書き換えてから実行
+// ★ PINを変えたいときは下の文字列を書き換えてから実行
 // ================================================================
 function setAdminPin() {
   const PIN = '5s2026'; // ← ここを変更する
@@ -119,7 +133,6 @@ function setAdminPin() {
 // ================================================================
 // 内部ヘルパー
 // ================================================================
-
 function getOrCreateSheet_(year, month) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const name = `${year}-${String(month).padStart(2, '0')}`;
@@ -131,7 +144,8 @@ function getOrCreateSheet_(year, month) {
       'S2_1','S2_2','S2_3','S2_4','S2_5','S2_6','S2_7','S2_8','S2_9','S2_10',
       '提出済み','提出日時','ロール'];
     sh.appendRow(headers);
-    sh.getRange(1, 1, 1, headers.length).setBackground('#1d4ed8').setFontColor('#ffffff').setFontWeight('bold');
+    sh.getRange(1, 1, 1, headers.length)
+      .setBackground('#1d4ed8').setFontColor('#ffffff').setFontWeight('bold');
   }
   return sh;
 }
@@ -152,19 +166,16 @@ function isSubmitted_(sh, name) {
 }
 
 function writeRow_(sh, name, s1, s2, submitted, submittedAt, role) {
-  const rowData = [
-    name,
+  const rowData = [name,
     ...s1.map(v => v != null ? v : ''),
     ...s2.map(v => v != null ? v : ''),
-    submitted, submittedAt, role
-  ];
+    submitted, submittedAt, role];
   const rowIdx = findRow_(sh, name);
   if (rowIdx) {
     sh.getRange(rowIdx, 1, 1, rowData.length).setValues([rowData]);
   } else {
     sh.appendRow(rowData);
   }
-  // 提出済みセルを色付け
   if (submitted) {
     const ri = findRow_(sh, name);
     sh.getRange(ri, 22).setBackground('#dcfce7');

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>事務所 5Sチェックシート</title>
+<style>
+:root{--brand:#1d4ed8;--brand-l:#3b82f6;--ok:#16a34a;--ok-bg:#dcfce7;--warn:#b45309;--warn-bg:#fef3c7;--ng:#dc2626;--ng-bg:#fee2e2;--bg:#f1f5f9;--card:#fff;--border:#cbd5e1;--text:#0f172a;--muted:#64748b;--r:12px;--sh:0 2px 8px rgba(0,0,0,.09)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hiragino Sans','Meiryo','Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+#app{max-width:980px;margin:0 auto;padding:16px}
+/* Header */
+.hd{background:linear-gradient(135deg,var(--brand),var(--brand-l));color:#fff;border-radius:var(--r);padding:18px 24px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--sh)}
+.hd h1{font-size:1.35rem;font-weight:700}
+.hd .sub{font-size:.82rem;opacity:.85;margin-top:3px}
+.hd-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700;background:rgba(255,255,255,.2)}
+.badge.q{background:#dc2626}
+.logout{background:rgba(255,255,255,.2);border:none;color:#fff;padding:5px 13px;border-radius:6px;cursor:pointer;font-size:.83rem}
+.logout:hover{background:rgba(255,255,255,.3)}
+/* Card */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:22px;margin-bottom:14px}
+.card h2{font-size:1.05rem;margin-bottom:14px;color:var(--brand);border-bottom:2px solid var(--border);padding-bottom:8px}
+/* Nav */
+.nav{display:flex;gap:8px;margin-bottom:14px}
+.nbtn{padding:8px 16px;border:2px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;font-size:.88rem;transition:all .15s}
+.nbtn.on{border-color:var(--brand);background:var(--brand);color:#fff}
+/* Name grid */
+.ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:9px;margin:12px 0}
+.nbtn2{padding:11px 6px;border:2px solid var(--border);border-radius:8px;background:var(--bg);cursor:pointer;font-size:.92rem;text-align:center;transition:all .15s}
+.nbtn2:hover{border-color:var(--brand-l);background:#eff6ff}
+.nbtn2.sel{border-color:var(--brand);background:#eff6ff;color:var(--brand);font-weight:700}
+.nbtn2.priv{border-color:var(--ng);color:var(--ng)}
+.nbtn2.priv:hover{background:#fff1f2}
+/* PIN */
+.pin-wrap{display:flex;gap:8px;align-items:center;margin-top:12px}
+.pin-wrap input{border:2px solid var(--border);border-radius:8px;padding:9px 14px;font-size:.95rem;width:190px}
+.pin-wrap input:focus{outline:none;border-color:var(--brand)}
+/* Buttons */
+.btn{padding:9px 18px;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .15s}
+.btn-p{background:var(--brand);color:#fff}.btn-p:hover{background:#1e40af}
+.btn-s{background:var(--ok);color:#fff}.btn-s:hover{background:#15803d}
+.btn-sm{padding:5px 12px;font-size:.82rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+/* Alert */
+.al{padding:11px 15px;border-radius:8px;margin:10px 0;font-size:.88rem}
+.al-i{background:#eff6ff;border-left:4px solid var(--brand);color:var(--brand)}
+.al-w{background:var(--warn-bg);border-left:4px solid var(--warn);color:var(--warn)}
+.al-s{background:var(--ok-bg);border-left:4px solid var(--ok);color:var(--ok)}
+.al-d{background:var(--ng-bg);border-left:4px solid var(--ng);color:var(--ng)}
+/* Eval form */
+.sec-ttl{background:var(--brand);color:#fff;padding:7px 14px;border-radius:6px;font-weight:700;margin:14px 0 8px;font-size:.9rem}
+.area-lbl{font-size:.77rem;font-weight:700;color:var(--muted);padding:8px 0 4px;border-top:1px solid var(--border);margin-top:6px;letter-spacing:.04em}
+.area-lbl:first-of-type{border-top:none;margin-top:0}
+.ci{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #f1f5f9}
+.ci:last-child{border-bottom:none}
+.ci-no{flex-shrink:0;width:26px;height:26px;background:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.77rem;font-weight:700;color:var(--muted)}
+.ci-txt{flex:1;font-size:.87rem;line-height:1.45;padding-top:3px}
+.sg{display:flex;gap:5px;flex-shrink:0}
+.sb{width:42px;height:34px;border:2px solid var(--border);border-radius:6px;cursor:pointer;font-weight:700;font-size:.87rem;background:#fff;transition:all .15s}
+.sb:hover{border-color:var(--brand-l)}
+.sb.ok{color:var(--ok)}.sb.ok.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+.sb.wr{color:var(--warn)}.sb.wr.on{background:#f59e0b;color:#fff;border-color:#f59e0b}
+.sb.ng{color:var(--ng)}.sb.ng.on{background:var(--ng);color:#fff;border-color:var(--ng)}
+.sb:disabled{opacity:.5;cursor:not-allowed}
+/* Total bar */
+.tbar{display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:8px;padding:11px 15px;margin:14px 0;font-weight:700}
+.tscore{font-size:1.4rem;color:var(--brand)}
+/* Member tabs */
+.mtabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.mtab{padding:5px 13px;border:2px solid var(--border);border-radius:20px;cursor:pointer;font-size:.83rem;background:#fff;transition:all .15s}
+.mtab.on{border-color:var(--brand);background:var(--brand);color:#fff}
+.mtab.done{border-color:var(--ok);color:var(--ok)}
+.mtab.done.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+/* Submitted view */
+.sv{text-align:center;padding:36px 16px}
+.sv .ico{font-size:3.5rem;margin-bottom:14px}
+.sv h2{color:var(--ok);font-size:1.4rem;margin-bottom:6px}
+.sv p{color:var(--muted);margin-bottom:20px}
+/* Q banner */
+.qban{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;padding:11px 18px;border-radius:8px;margin-bottom:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+/* Result table */
+.rtw{overflow-x:auto}
+.rt{width:100%;border-collapse:collapse;font-size:.77rem;min-width:700px}
+.rt th{background:var(--brand);color:#fff;padding:7px 5px;text-align:center}
+.rt th.ar{background:#1e3a8a}
+.rt td{padding:5px;text-align:center;border:1px solid var(--border)}
+.rt .itl{text-align:left;padding-left:7px;max-width:180px;font-size:.75rem}
+.rt .arc{background:#f8fafc;font-weight:700;font-size:.73rem;vertical-align:middle}
+.c10{background:#bbf7d0;color:#15803d;font-weight:700}
+.c5{background:#fef08a;color:#92400e;font-weight:700}
+.c0{background:#fecaca;color:#991b1b;font-weight:700}
+.cna{background:#f1f5f9;color:#94a3b8}
+.ct{background:var(--bg);font-weight:700;font-size:.88rem}
+.ct.hi{background:var(--ok-bg);color:var(--ok)}
+.ct.md{background:var(--warn-bg);color:var(--warn)}
+.ct.lo{background:var(--ng-bg);color:var(--ng)}
+@media(max-width:600px){
+  .ci{flex-direction:column;gap:7px}
+  .ngrid{grid-template-columns:repeat(3,1fr)}
+  .hd{flex-direction:column;gap:8px;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ================================================================
+// 設定（カスタマイズ可能）
+// ================================================================
+const CFG = {
+  members: ['平林','森崎','里見','堀江','細江','林','専務','山本','本城','横塚','四ツ木','有側','伊藤','松谷','毛利'],
+  privileged: ['伊藤A','本城A','林A','事務所管理者','5Sリーダー'],
+  adminPin: '5s2026',        // ★ PINコードはここで変更
+  qMonths: [3,6,9,12],      // 第三者評価月
+};
+
+const S1 = [
+  {a:'机の上', n:1,  t:'業務中や回覧中の物品以外は置かないこと。'},
+  {a:'机の上', n:2,  t:'机上に書類・ファイル類が無造作に置いてない事（サイズ、角を揃えること）'},
+  {a:'机の上', n:3,  t:'パソコンのディスプレイの周りにふせんなどを貼り付けないこと。'},
+  {a:'机の上', n:4,  t:'上向きになっている空きコンセントにプラグをしてあること。'},
+  {a:'机の上', n:5,  t:'上着をイスにかけない。（ロッカーへ片付ける）'},
+  {a:'机の下', n:6,  t:'地震時に避難するスペース（身体が全部、入られる。）があること。'},
+  {a:'机の下', n:7,  t:'机から離れるときは椅子をキチンと押し込むこと。'},
+  {a:'床面',   n:8,  t:'業務中の物品は通路を遮らないように置いてあること。'},
+  {a:'床面',   n:9,  t:'不急不要品がないこと。'},
+  {a:'床面',   n:10, t:'物品を一時置きする場合は保管期限と担当者名を明記すること。'},
+];
+const S2 = [
+  {a:'棚',              n:11, t:'棚の上に何も置かないこと。'},
+  {a:'棚',              n:12, t:'高さ1.3m以下の書棚の上には決められたもの以外を置かないこと。'},
+  {a:'棚',              n:13, t:'扉が閉まっていること。'},
+  {a:'壁・柱',          n:14, t:'掲示期限のある掲示物には期日を記入すること。'},
+  {a:'壁・柱',          n:15, t:'掲示期限が決めてないものは「期限なし」と明記すること。'},
+  {a:'壁・柱',          n:16, t:'期限切れの掲示物がないこと。'},
+  {a:'壁・柱',          n:17, t:'掲示物は平行・直角を原則として整然と配置すること。（汚れ・破損・はがれがないこと）'},
+  {a:'その他(防火・防災)',n:18, t:'避難誘導灯の球切れがないこと。'},
+  {a:'その他(防火・防災)',n:19, t:'消火器などの緊急機器の置き場表示が明確であること。'},
+  {a:'その他(防火・防災)',n:20, t:'最終退出・火元・戸締り確認ルールが明確になっていること。'},
+];
+
+const MN = ['','1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+// ================================================================
+// State
+// ================================================================
+const st = {
+  view: 'login',
+  user: null,
+  role: null,       // 'member' | 'priv'
+  selMember: null,  // admin eval: which member tab
+  y: new Date().getFullYear(),
+  m: new Date().getMonth() + 1,
+};
+let _selPrivName = null;
+
+const isQ = () => CFG.qMonths.includes(st.m);
+const skey = () => `5s_${st.y}_${String(st.m).padStart(2,'0')}`;
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(skey())) || {}; } catch { return {}; }
+}
+function save(d) { localStorage.setItem(skey(), JSON.stringify(d)); }
+
+function getMD(name) {
+  const d = load();
+  return d[name] || {s1:Array(10).fill(null), s2:Array(10).fill(null), submitted:false, submittedAt:null};
+}
+function setMD(name, data) {
+  const d = load(); d[name] = data; save(d);
+}
+
+function scCls(s) {
+  if (s===10) return 'c10'; if (s===5) return 'c5'; if (s===0) return 'c0'; return 'cna';
+}
+function totCls(t,max) {
+  const p = t/max*100;
+  return p>=90 ? 'ct hi' : p>=70 ? 'ct md' : 'ct lo';
+}
+function sum(arr) { return arr.reduce((a,b)=>a+(b||0),0); }
+
+// ================================================================
+// Render
+// ================================================================
+function render() {
+  const q = isQ();
+  const hd = `<div class="hd">
+    <div>
+      <h1>🏢 事務所 5Sチェックシート</h1>
+      <div class="sub">${st.y}年 ${MN[st.m]}${q?' ／ 第三者評価月':''}</div>
+    </div>
+    <div class="hd-right">
+      ${st.user ? `<span style="font-size:.88rem;opacity:.9">${st.user}</span>` : ''}
+      <span class="badge ${q?'q':''}">${q?'第三者評価月':'通常評価月'}</span>
+      ${st.user ? `<button class="logout" onclick="logout()">ログアウト</button>` : ''}
+    </div>
+  </div>`;
+  document.getElementById('app').innerHTML = hd + (
+    st.view==='login' ? renderLogin() :
+    st.view==='eval'  ? renderEval()  :
+    renderResults()
+  );
+}
+
+// ================================================================
+// LOGIN
+// ================================================================
+function renderLogin() {
+  const q = isQ();
+  const memberSection = q
+    ? `<div class="card"><div class="qban">⚠️ 今月（${MN[st.m]}）は第三者評価月です。メンバー個人の評価入力はできません。</div>
+       <p style="font-size:.88rem;color:var(--muted)">管理者・5Sリーダーのみ評価可能です。</p></div>`
+    : `<div class="card">
+        <h2>👤 メンバー（個人評価）</h2>
+        <p style="font-size:.83rem;color:var(--muted);margin-bottom:4px">自分の名前を選んでください</p>
+        <div class="ngrid">${CFG.members.map(m=>`<button class="nbtn2" onclick="loginMember('${m}')">${m}</button>`).join('')}</div>
+       </div>`;
+
+  const privSection = `<div class="card">
+    <h2>🔐 管理者・5Sリーダー</h2>
+    <div class="ngrid">${CFG.privileged.map(p=>`<button class="nbtn2 priv" id="pb_${p.replace(/[^a-zA-Z0-9]/g,'_')}" onclick="selectPriv('${p}',this)">${p}</button>`).join('')}</div>
+    <div class="al al-i" style="margin-top:12px">名前を選んでPINコードを入力してください</div>
+    <div class="pin-wrap">
+      <input type="password" id="pin" placeholder="PINコード" onkeydown="if(event.key==='Enter')loginPriv()">
+      <button class="btn btn-p" onclick="loginPriv()">ログイン</button>
+    </div>
+    <div id="pin-err" style="color:var(--ng);font-size:.83rem;margin-top:5px"></div>
+  </div>`;
+
+  return memberSection + privSection;
+}
+
+function loginMember(name) {
+  st.user = name; st.role = 'member'; st.view = 'eval';
+  render();
+}
+
+function selectPriv(name, el) {
+  _selPrivName = name;
+  document.querySelectorAll('.nbtn2.priv').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('pin').focus();
+}
+
+function loginPriv() {
+  if (!_selPrivName) { document.getElementById('pin-err').textContent='名前を選んでください'; return; }
+  if (document.getElementById('pin').value !== CFG.adminPin) {
+    document.getElementById('pin-err').textContent='PINコードが違います'; return;
+  }
+  st.user = _selPrivName; st.role = 'priv';
+  st.selMember = CFG.members[0];
+  st.view = 'eval';
+  render();
+}
+
+function logout() {
+  st.user=null; st.role=null; st.view='login'; st.selMember=null; _selPrivName=null;
+  render();
+}
+
+// ================================================================
+// EVAL
+// ================================================================
+function renderEval() {
+  const nav = `<div class="nav">
+    <button class="nbtn on">📝 評価入力</button>
+    ${st.role==='priv' ? `<button class="nbtn" onclick="st.view='results';render()">📊 結果一覧</button>` : ''}
+  </div>`;
+  if (st.role==='member') return nav + renderMemberEval();
+  return nav + renderPrivEval();
+}
+
+// ---- Member ----
+function renderMemberEval() {
+  const name = st.user;
+  const md = getMD(name);
+  if (md.submitted) return `<div class="card sv">
+    <div class="ico">✅</div>
+    <h2>提出完了</h2>
+    <p>${md.submittedAt} に提出しました</p>
+    ${roScores(S1, md.s1)}
+    <div class="tbar"><span>合計点</span><span class="tscore">${sum(md.s1)} / 100点</span></div>
+    <p style="font-size:.82rem;color:var(--muted)">提出後の編集はできません。</p>
+  </div>`;
+
+  return `<div class="card">
+    <h2>📋 ${name} さんの評価入力</h2>
+    <div class="al al-i">各項目を○(10点)△(5点)×(0点)で評価し、提出してください。提出後は変更不可です。</div>
+    <div class="sec-ttl">第1部：個人エリア評価（机周り・床面）</div>
+    ${scoreForm('s1', S1, md.s1, name, false)}
+    <div class="tbar"><span>合計点</span><span class="tscore" id="tot-s1">${sum(md.s1)} / 100点</span></div>
+    <div style="text-align:right;margin-top:12px">
+      <button class="btn btn-s" onclick="submitMember()">✓ 提出する（変更不可）</button>
+    </div>
+  </div>`;
+}
+
+// ---- Priv (admin/leader) ----
+function renderPrivEval() {
+  const allD = load();
+  const tabs = CFG.members.map(m=>{
+    const done = allD[m] && allD[m].submitted;
+    return `<button class="mtab ${st.selMember===m?'on':''} ${done?'done':''}" onclick="st.selMember='${m}';render()">${m}${done?' ✓':''}</button>`;
+  }).join('');
+
+  const md = getMD(st.selMember);
+  let s1html;
+  if (md.submitted) {
+    s1html = `<div class="al al-s">✅ ${st.selMember} さん：提出済み（${md.submittedAt}）</div>
+      ${roScores(S1, md.s1)}
+      <div class="tbar"><span>合計</span><span class="tscore">${sum(md.s1)} / 100点</span></div>`;
+  } else {
+    s1html = `${scoreForm('s1', S1, md.s1, st.selMember, false)}
+      <div class="tbar"><span>合計点</span><span class="tscore" id="tot-s1">${sum(md.s1)} / 100点</span></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+        <button class="btn btn-p btn-sm" onclick="saveDraft('${st.selMember}')">一時保存</button>
+        <button class="btn btn-s" onclick="submitAdmin('${st.selMember}')">✓ ${st.selMember}さんの評価を確定</button>
+      </div>`;
+  }
+
+  const cmd = getMD('__common__');
+  let s2html;
+  if (cmd.submitted) {
+    s2html = `<div class="al al-s">✅ 共通エリア：提出済み（${cmd.submittedAt}）</div>
+      ${roScores(S2, cmd.s2)}
+      <div class="tbar"><span>合計</span><span class="tscore">${sum(cmd.s2)} / 100点</span></div>`;
+  } else {
+    s2html = `${scoreForm('s2', S2, cmd.s2, '__common__', false)}
+      <div class="tbar"><span>合計点</span><span class="tscore" id="tot-s2">${sum(cmd.s2)} / 100点</span></div>
+      <div style="text-align:right;margin-top:10px">
+        <button class="btn btn-s" onclick="submitCommon()">✓ 共通エリア評価を確定</button>
+      </div>`;
+  }
+
+  const q = isQ();
+  return `<div class="card">
+    <h2>👤 メンバー個人評価${q?' （第三者評価）':''}</h2>
+    ${q?`<div class="qban">⚠️ 第三者評価月：管理者・リーダーが全メンバーを評価します</div>`:''}
+    <div class="mtabs">${tabs}</div>
+    <div class="sec-ttl">第1部：個人エリア評価 — ${st.selMember} さん</div>
+    ${s1html}
+  </div>
+  <div class="card">
+    <h2>🏢 共通エリア評価</h2>
+    <div class="sec-ttl">第2部：棚・壁柱・防火防災</div>
+    ${s2html}
+  </div>`;
+}
+
+// ---- Score form ----
+function scoreForm(sec, items, scores, key, ro) {
+  let h=''; let la=null;
+  items.forEach((it,i)=>{
+    if (it.a!==la) { h+=`<div class="area-lbl">📍 ${it.a}</div>`; la=it.a; }
+    const s=scores[i];
+    const ek = key.replace(/[^a-zA-Z0-9_]/g,'_');
+    h+=`<div class="ci">
+      <div class="ci-no">${it.n}</div>
+      <div class="ci-txt">${it.t}</div>
+      <div class="sg">
+        <button class="sb ok ${s===10?'on':''}" ${ro?'disabled':''} onclick="setScore('${key}','${sec}',${i},10)">○</button>
+        <button class="sb wr ${s===5?'on':''}"  ${ro?'disabled':''} onclick="setScore('${key}','${sec}',${i},5)">△</button>
+        <button class="sb ng ${s===0?'on':''}"  ${ro?'disabled':''} onclick="setScore('${key}','${sec}',${i},0)">×</button>
+      </div>
+    </div>`;
+  });
+  return h;
+}
+
+function roScores(items, scores) {
+  let h=''; let la=null;
+  const col={10:'var(--ok)',5:'var(--warn)',0:'var(--ng)'};
+  items.forEach((it,i)=>{
+    if (it.a!==la){h+=`<div class="area-lbl">📍 ${it.a}</div>`;la=it.a;}
+    const s=scores[i]; const lbl=s===10?'○':s===5?'△':s===0?'×':'－';
+    h+=`<div class="ci">
+      <div class="ci-no">${it.n}</div>
+      <div class="ci-txt">${it.t}</div>
+      <div style="font-size:1.1rem;font-weight:700;color:${col[s]||'var(--muted)'};width:42px;text-align:center">${lbl}</div>
+      <div style="font-weight:700;color:${col[s]||'var(--muted)'};width:32px;text-align:right">${s!=null?s+'点':'－'}</div>
+    </div>`;
+  });
+  return h;
+}
+
+// ---- Scoring ----
+function setScore(key, sec, idx, val) {
+  const md = getMD(key);
+  if (md.submitted) return;
+  md[sec][idx] = val;
+  setMD(key, md);
+  render();
+}
+
+// ---- Submit ----
+function submitMember() {
+  const md = getMD(st.user);
+  let scores = md.s1;
+  const ua = scores.filter(s=>s===null).length;
+  if (ua>0 && !confirm(`${ua}項目が未評価です。未評価は0点として提出しますか？`)) return;
+  if (!confirm('提出すると編集できなくなります。よろしいですか？')) return;
+  md.s1 = scores.map(s=>s===null?0:s);
+  md.submitted = true;
+  md.submittedAt = new Date().toLocaleString('ja-JP');
+  setMD(st.user, md);
+  render();
+}
+
+function submitAdmin(name) {
+  const md = getMD(name);
+  const ua = md.s1.filter(s=>s===null).length;
+  if (ua>0 && !confirm(`${ua}項目が未評価です。このまま確定しますか？`)) return;
+  if (!confirm(`${name}さんの評価を確定します。よろしいですか？`)) return;
+  md.s1 = md.s1.map(s=>s===null?0:s);
+  md.submitted = true;
+  md.submittedAt = new Date().toLocaleString('ja-JP') + '（管理者入力）';
+  setMD(name, md);
+  const allD = load();
+  const next = CFG.members.find(m=>!(allD[m]&&allD[m].submitted));
+  if (next) st.selMember = next;
+  render();
+}
+
+function submitCommon() {
+  const md = getMD('__common__');
+  const ua = md.s2.filter(s=>s===null).length;
+  if (ua>0 && !confirm(`${ua}項目が未評価です。このまま提出しますか？`)) return;
+  if (!confirm('共通エリア評価を確定します。よろしいですか？')) return;
+  md.s2 = md.s2.map(s=>s===null?0:s);
+  md.submitted = true;
+  md.submittedAt = new Date().toLocaleString('ja-JP');
+  setMD('__common__', md);
+  render();
+}
+
+function saveDraft(name) {
+  alert(`${name}さんの入力を一時保存しました。`);
+}
+
+// ================================================================
+// RESULTS
+// ================================================================
+function renderResults() {
+  const nav = `<div class="nav">
+    <button class="nbtn" onclick="st.view='eval';render()">📝 評価入力</button>
+    <button class="nbtn on">📊 結果一覧</button>
+  </div>`;
+
+  const d = load();
+  const cmd = d['__common__'] || {s2:Array(10).fill(null), submitted:false};
+
+  // Section 1 table
+  let th1 = `<tr><th class="ar">場所</th><th>№</th><th class="ar" style="text-align:left;padding-left:6px">チェック項目</th>`;
+  CFG.members.forEach(m=>{ th1+=`<th>${m}</th>`; });
+  th1+='</tr>';
+
+  const totals = CFG.members.map(()=>0);
+  let tb1=''; let la=null;
+  S1.forEach((it,i)=>{
+    tb1+='<tr>';
+    if (it.a!==la){tb1+=`<td class="arc" rowspan="${S1.filter(x=>x.a===it.a).length}">${it.a}</td>`;la=it.a;}
+    tb1+=`<td>${it.n}</td><td class="itl">${it.t}</td>`;
+    CFG.members.forEach((m,mi)=>{
+      const md=d[m]; const s=md?md.s1[i]:null;
+      totals[mi]+=(s||0);
+      tb1+=`<td class="${scCls(s)}">${s===null?'－':s===10?'○':s===5?'△':'×'}</td>`;
+    });
+    tb1+='</tr>';
+  });
+  tb1+='<tr><td colspan="3" style="font-weight:700;text-align:right;padding-right:8px">合計</td>';
+  CFG.members.forEach((m,mi)=>{
+    const md=d[m]; const ok=md&&md.submitted;
+    tb1+=`<td class="${ok?totCls(totals[mi],100):'cna'}">${ok?totals[mi]:'未'}</td>`;
+  });
+  tb1+='</tr>';
+
+  // Section 2 table
+  let tb2=''; la=null; let s2tot=0;
+  S2.forEach((it,i)=>{
+    tb2+='<tr>';
+    if(it.a!==la){tb2+=`<td class="arc" rowspan="${S2.filter(x=>x.a===it.a).length}">${it.a}</td>`;la=it.a;}
+    const s=cmd.s2?cmd.s2[i]:null; s2tot+=(s||0);
+    tb2+=`<td>${it.n}</td><td class="itl">${it.t}</td><td class="${scCls(s)}">${s===null?'－':s===10?'○':s===5?'△':'×'}</td></tr>`;
+  });
+  tb2+=`<tr><td colspan="3" style="font-weight:700;text-align:right;padding-right:8px">合計</td>
+    <td class="${cmd.submitted?totCls(s2tot,100):'cna'}">${cmd.submitted?s2tot:'未'}</td></tr>`;
+
+  const submitted = CFG.members.filter(m=>d[m]&&d[m].submitted).length;
+
+  return nav+`<div class="card">
+    <h2>📊 評価結果一覧 — ${st.y}年${MN[st.m]}</h2>
+    <div class="al al-i" style="margin-bottom:12px">提出状況：${submitted} / ${CFG.members.length} 名完了</div>
+    <h3 style="font-size:.9rem;margin:10px 0 8px;color:var(--brand)">▶ 第1部：個人エリア評価</h3>
+    <div class="rtw"><table class="rt"><thead>${th1}</thead><tbody>${tb1}</tbody></table></div>
+    <h3 style="font-size:.9rem;margin:18px 0 8px;color:var(--brand)">▶ 第2部：共通エリア評価</h3>
+    <div class="rtw"><table class="rt">
+      <thead><tr><th class="ar">場所</th><th>№</th><th class="ar" style="text-align:left;padding-left:6px">チェック項目</th><th>評価</th></tr></thead>
+      <tbody>${tb2}</tbody>
+    </table></div>
+    <div style="margin-top:14px;text-align:right">
+      <button class="btn btn-p btn-sm" onclick="exportCSV()">📥 CSVエクスポート</button>
+    </div>
+  </div>`;
+}
+
+function scCls(s){return s===10?'c10':s===5?'c5':s===0?'c0':'cna';}
+
+function exportCSV() {
+  const d = load();
+  const bom = '﻿';
+  let csv = '氏名,'+S1.map(i=>`${i.n}）${i.t}`).join(',')+',合計(個人)\n';
+  CFG.members.forEach(m=>{
+    const md=d[m]||{s1:Array(10).fill('')};
+    csv+=`${m},${md.s1.map(s=>s!=null?s:'').join(',')},${md.submitted?sum(md.s1):''}\n`;
+  });
+  csv+='\n共通エリア,'+S2.map(i=>`${i.n}）${i.t}`).join(',')+',合計(共通)\n';
+  const cm=d['__common__']||{s2:Array(10).fill('')};
+  csv+=`評価結果,${cm.s2.map(s=>s!=null?s:'').join(',')},${cm.submitted?sum(cm.s2):''}\n`;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([bom+csv],{type:'text/csv'}));
+  a.download=`5S評価_${st.y}年${st.m}月.csv`;
+  a.click();
+}
+
+// ================================================================
+render();
+</script>
+</body>
+</html>
