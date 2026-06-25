@@ -226,9 +226,9 @@ function renderLogin() {
         <h2>👤 メンバー（個人評価）</h2>
         <p style="font-size:.82rem;color:var(--muted);margin-bottom:4px">自分の名前を選んでください</p>
         <div class="ngrid">
-          ${st.cfg.members.map(m=>`<button class="nbtn" onclick="loginMember('${m}')">${m}</button>`).join('')}
-          ${st.cfg.s2members.map(m=>`<button class="nbtn" onclick="loginMember('${m}')">${m}</button>`).join('')}
+          ${st.cfg.members.map(m=>`<button class="nbtn ${st.cfg.s2members.includes(m)?'s2':''}\" onclick="loginMember('${m}')">${m}${st.cfg.s2members.includes(m)?'*':''}</button>`).join('')}
         </div>
+        <p style="font-size:.75rem;color:var(--muted);margin-top:4px">* 共通エリアも担当</p>
        </div>`;
   return memberSec + `<div class="card">
     <h2>🔐 管理者・5Sリーダー（第三者評価月専用）</h2>
