@@ -339,7 +339,8 @@ async function loadAllData() {
 function renderEval() {
   const nav = `<div class="nav">
     <button class="nbtn2 on">📝 評価入力</button>
-    ${st.role==='priv' ? `<button class="nbtn2" onclick="switchResults()">📊 結果一覧</button>` : ''}
+    <button class="nbtn2" onclick="switchResults()">📊 結果一覧</button>
+    <button class="nbtn2" onclick="switchFloorMap()">🗺️ フロアマップ</button>
   </div>`;
   if (st.role === 'priv')     return nav + renderPrivEval();
   if (st.role === 's2member') return nav + renderS2MemberEval();
@@ -350,6 +351,14 @@ async function switchResults() {
   showSpinner('結果を取得中...');
   st.results = await apiGet({ action: 'getResults', year: st.y, month: st.m });
   st.view = 'results'; render();
+}
+
+async function switchFloorMap() {
+  showSpinner('読み込み中...');
+  if (!st.results) {
+    st.results = await apiGet({ action: 'getResults', year: st.y, month: st.m });
+  }
+  st.view = 'floormap'; render();
 }
 
 function renderMemberEval() {
@@ -600,9 +609,11 @@ function renderFloorMap() {
   </div>`).join('');
 
   return nav + `<div class="card">
+    <h2>🗺️ フロアマップ</h2>
+    ${monthSelectorHtml()}
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
-      <h2 style="margin:0">🗺️ フロアマップ — ${st.y}年${MN[st.m]}</h2>
-      <button class="btn btn-p btn-sm" onclick="refreshResults().then(()=>{st.view='floormap';render()})">🔄 更新</button>
+      <span style="font-weight:700;color:var(--brand)">${st.y}年${MN[st.m]}</span>
+      <button class="btn btn-p btn-sm" onclick="changeResultMonth(${st.y},${st.m}).then(()=>{st.view='floormap';render()})">🔄 更新</button>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">${legend}</div>
     <div style="position:relative;width:100%;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff">
@@ -618,11 +629,24 @@ function renderFloorMap() {
   </div>`;
 }
 
+function monthSelectorHtml() {
+  const now = new Date();
+  const cy = now.getFullYear();
+  const years = [cy-1, cy];
+  let html = `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+    <span style="font-size:.8rem;color:var(--muted)">年度：</span>
+    ${years.map(y=>`<button class="mtab ${st.y===y?'on':''}" onclick="changeResultMonth(${y},${st.m})">${y}年</button>`).join('')}
+    <span style="font-size:.8rem;color:var(--muted);margin-left:6px">月：</span>
+    ${Array.from({length:12},(_,i)=>{const m=i+1;return `<button class="mtab ${st.m===m&&st.y===st.y?'on':''}" onclick="changeResultMonth(${st.y},${m})">${m}月</button>`;}).join('')}
+  </div>`;
+  return html;
+}
+
 function renderResults() {
   const nav=`<div class="nav">
     <button class="nbtn2" onclick="st.view='eval';render()">📝 評価入力</button>
     <button class="nbtn2 on">📊 結果一覧</button>
-    <button class="nbtn2" onclick="st.view='floormap';render()">🗺️ フロアマップ</button>
+    <button class="nbtn2" onclick="switchFloorMap()">🗺️ フロアマップ</button>
   </div>`;
   const d=st.results||{}, members=st.cfg.members;
   const cmd=d['__common__']||{s2:Array(10).fill(null),submitted:false};
@@ -649,7 +673,9 @@ function renderResults() {
   const submitted=members.filter(m=>d[m]&&d[m].submitted).length;
   const thM=members.map(m=>`<th>${m}</th>`).join('');
   return nav+`<div class="card">
-    <h2>📊 評価結果一覧 — ${st.y}年${MN[st.m]}</h2>
+    <h2>📊 評価結果一覧</h2>
+    ${monthSelectorHtml()}
+    <div style="font-weight:700;margin-bottom:8px;color:var(--brand)">${st.y}年${MN[st.m]}</div>
     <div class="al al-i" style="margin-bottom:10px">提出状況：<b>${submitted} / ${members.length} 名</b>完了</div>
     <h3 style="font-size:.88rem;margin:8px 0 6px;color:var(--brand)">▶ 第1部：個人エリア評価</h3>
     <div class="rtw"><table class="rt">
@@ -670,6 +696,13 @@ async function refreshResults() {
   showSpinner('更新中...');
   st.results = await apiGet({action:'getResults',year:st.y,month:st.m});
   st.view='results'; render();
+}
+
+async function changeResultMonth(y, m) {
+  st.y = y; st.m = m; st.results = null;
+  showSpinner('読み込み中...');
+  st.results = await apiGet({action:'getResults',year:y,month:m});
+  render();
 }
 
 function exportCSV() {
